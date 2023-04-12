@@ -1,41 +1,5 @@
-<style>
-    details > summary {
-        list-style-image: url(readme_img/arrow.png);
-    }
-    details[open] > summary {
-        list-style-image: url(readme_img/arrow2.png);
-    }
-    * {
-        background-color: #000000;
-    }
-    * {
-	    color: #cccccc;
-	    font-size: 1.3rem;
-	    font-family: arial;
-    }
-    a {
-	    color: #fae588;
-    }
-    a:visited {
-	    color: #f9dc5c;
-    }
-    a:hover {
-	    color: #fdf8e1;
-    }
-    pre {
-	    font-family: "menlo";
-	    font-size: 1rem;
-	    color: #cccccc;
-	    font-weight: bold; 
-	    border: 0.2rem solid #cccccc;
-	    border-radius: 15px;
-	    padding: 1rem;
-    }
-    code {
-	display: block;
-	overflow-x: scroll;
-    }    
-</style>
+
+
 # R2.04-Mini-projet 
 ## **Projet 3 : Chiffrement de messages**
 ---
@@ -164,5 +128,43 @@ On doit donc créer notre programme à partir de ce schéma :
 	    Passer à la lettre suivante
     Afficher le message codé
 
-    TexteChiffreFinal[i] = ( TexteClair[i] + Clef[i] ) mod 26
+    TexteChiffreFinal[i] = ( TexteClair[i] + Cle[i] ) mod 26
     </code>
+<style>
+    details > summary {
+        list-style-image: url(readme_img/arrow.png);
+    }
+    details[open] > summary {
+        list-style-image: url(readme_img/arrow2.png);
+    }
+    * {
+        background-color: #000000;
+    }
+    * {
+	    color: #cccccc;
+	    font-size: 1.3rem;
+	    font-family: arial;
+    }
+    a {
+	    color: #fae588;
+    }
+    a:visited {
+	    color: #f9dc5c;
+    }
+    a:hover {
+	    color: #fdf8e1;
+    }
+    pre {
+	    font-family: "menlo";
+	    font-size: 1rem;
+	    color: #cccccc;
+	    font-weight: bold; 
+	    border: 0.2rem solid #cccccc;
+	    border-radius: 15px;
+	    padding: 1rem;
+    }
+    code {
+	display: block;
+	overflow-x: scroll;
+    }    
+</style> 
