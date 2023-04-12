@@ -5,6 +5,10 @@
     details[open] > summary {
         list-style-image: url(readme_img/arrow2.png);
     }
+    * {
+        background: black;
+        margin:auto;
+    }
     
 </style>
 # R2.04-Mini-projet 
@@ -24,7 +28,7 @@ Créé par l'équipe 2 du groupe F composée de :
 4. [Aspects techniques](#techniques)
 
 <h1 id="projet"><b> 1.Description de la demande </b> </h1>
-Ce projet consiste à pouvoir chiffrer et à dechiffrer du texte en cconvertissant les accents.
+Ce projet consiste à pouvoir chiffrer et à dechiffrer du texte en convertissant les accents.
 
 On doit donc créer notre programme à partir de ce schéma :
 ![image de la consigne](readme_img/consigne.png)
@@ -46,9 +50,9 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id="verifier">
 <h2><i> verifier_alphanumerique :</i> </h2>
     <details> <summary>But</summary>
-        Vérifier si les caractères à coder sont  </details>
-    <details> <summary>Paramètres</summary>
-        test </details>
+        Vérifier si la chaine de caracteres ne contient pas des caracteres speciaux qui ne pourront pas etre chiffrés</details>
+    <details> <summary>Entrées | Sorties </summary>
+         </details>
     <details> <summary>Erreur possibles</summary>
         test </details>
 </div>
@@ -60,7 +64,7 @@ On doit donc créer notre programme à partir de ce schéma :
 <h2><i> convertir_accents : </i> </h2>
 <details> <summary>But</summary>
         test </details>
-    <details> <summary>Paramètres</summary>
+    <details> <summary>Entrées | Sorties</summary>
         test </details>
     <details> <summary>Erreur possibles</summary>
         test </details>
@@ -73,7 +77,7 @@ On doit donc créer notre programme à partir de ce schéma :
 
 <details> <summary>But</summary>
         test </details>
-    <details> <summary>Paramètres</summary>
+    <details> <summary>Entrées | Sorties</summary>
         test </details>
     <details> <summary>Erreur possibles</summary>
         test </details>
@@ -85,7 +89,7 @@ On doit donc créer notre programme à partir de ce schéma :
 <h2><i> dechiffrer : </i></h2>
 <details> <summary style="content:f105">But</summary>
         test </details>
-    <details> <summary>Paramètres</summary>
+    <details> <summary>Entrées | Sorties</summary>
         test </details>
     <details> <summary>Erreur possibles</summary>
         test </details>
@@ -97,14 +101,13 @@ On doit donc créer notre programme à partir de ce schéma :
 <h2><i> affichage : </i></h2>
 <details> <summary>But</summary>
         test </details>
-    <details> <summary>Paramètres</summary>
+    <details> <summary>Entrées | Sorties</summary>
         test </details>
     <details> <summary>Erreur possibles</summary>
         test </details>
 </div>
 
 ---
-
 <h1 id="doc"><b> 3.Documentation d'utilisation</b></h1>
 
 ## LES ETAPES 
@@ -112,8 +115,29 @@ On doit donc créer notre programme à partir de ce schéma :
 <h1 id="techniques"><b> 4.Aspect techniques</b></h1>
 
 1. L'algorithmique
-    - Voici notre algorithme naïf du chiffrage César:
-    ```
+    - Notre algorithme naïf du chiffrage de César:
     
-    ```
+    <code>
+    Choix de la clé (nombre entre 1 et 25)
+        Tant que le message n'est pas chiffré en entier :
+	    Lire la lettre
+	    Attribuer à la lettre son correspondant grace à la clé (si lettre = A et clé = 3, alors lettre = D)
+	    Remplacer le correspondant dans le message
+	    Passer a la lettre suivante
+    Afficher le message code
 
+    Pour dechiffrer, même méthode avec clé = - clé
+    </code>
+    - Notre algortithme naïf du Vigenère:
+
+    <code>
+    Choix de la clé (correspondant à un mot)
+    Tant que le message n'est pas chiffré en entier :
+	    Lire la lettre
+	    Attribuer à la lettre son correspondant grace à la clé et à sa position (si lettre = A, clé = MUSIQUE et position = 3, alors lettre = S)
+	    Remplacer le correspondant dans le message
+	    Passer à la lettre suivante
+    Afficher le message codé
+
+    TexteChiffreFinal[i] = ( TexteClair[i] + Clef[i] ) mod 26
+    </code>
