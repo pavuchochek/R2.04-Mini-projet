@@ -132,7 +132,3 @@ On doit donc créer notre programme à partir de ce schéma :
 
     TexteChiffreFinal[i] = ( TexteClair[i] + Cle[i] ) mod 26
     </pre>
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<progress> </progress>
-
-<h2> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;WORK IN PROGRESS</h2>
