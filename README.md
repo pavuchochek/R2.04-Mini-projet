@@ -6,10 +6,35 @@
         list-style-image: url(readme_img/arrow2.png);
     }
     * {
-        background: black;
-        margin:auto;
+        background-color: #000000;
     }
-    
+    * {
+	    color: #cccccc;
+	    font-size: 1.3rem;
+	    font-family: arial;
+    }
+    a {
+	    color: #fae588;
+    }
+    a:visited {
+	    color: #f9dc5c;
+    }
+    a:hover {
+	    color: #fdf8e1;
+    }
+    pre {
+	    font-family: "menlo";
+	    font-size: 1rem;
+	    color: #cccccc;
+	    font-weight: bold; 
+	    border: 0.2rem solid #cccccc;
+	    border-radius: 15px;
+	    padding: 1rem;
+    }
+    code {
+	display: block;
+	overflow-x: scroll;
+    }    
 </style>
 # R2.04-Mini-projet 
 ## **Projet 3 : Chiffrement de messages**
