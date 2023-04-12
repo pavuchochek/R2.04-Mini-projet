@@ -39,9 +39,12 @@ On doit donc créer notre programme à partir de ce schéma :
     <details> <summary>But</summary>
         Vérifier si la chaine de caracteres ne contient pas des caracteres speciaux qui ne pourront pas etre chiffrés</details>
     <details> <summary>Entrées | Sorties </summary>
+        Entrée : chaine de caractères
+        Sortie : le même texte ou le message d'erreur
          </details>
     <details> <summary>Erreur possibles</summary>
-        test </details>
+        Une erreur sera affichée *nom de l'erreur* si le texte contient des caractères specifiques
+       </details>
 </div>
 
 
@@ -50,11 +53,10 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id="convertir_accents">
 <h2><i> convertir_accents : </i> </h2>
 <details> <summary>But</summary>
-        test </details>
+        Convertir les accents d'une chaîne de caracteres pour pouvoir chiffrer quand même la lettre </details>
     <details> <summary>Entrées | Sorties</summary>
-        test </details>
-    <details> <summary>Erreur possibles</summary>
-        test </details>
+        Entrée : chaine de caractères
+        Sortie : le même texte sans les accents</details>
 </div>
 
 ---
@@ -63,11 +65,12 @@ On doit donc créer notre programme à partir de ce schéma :
 <h2><i> chiffrer : </i></h2>
 
 <details> <summary>But</summary>
-        test </details>
+        Chiffrer le message en code Cesar avec une clé</details>
     <details> <summary>Entrées | Sorties</summary>
-        test </details>
+        Entrée : chaine de caractères sans accents,clé
+        Sortie : le texte chiffré par rapport à la clé donné</details>
     <details> <summary>Erreur possibles</summary>
-        test </details>
+        Clé impossible </details>
 </div>
 
 ---
@@ -75,11 +78,12 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id ="dechiffer">
 <h2><i> dechiffrer : </i></h2>
 <details> <summary style="content:f105">But</summary>
-        test </details>
+        Pouvoir dechiffrer un message en ayant une clé </details>
     <details> <summary>Entrées | Sorties</summary>
-        test </details>
+        Entrée : chaine de caractères sans accents,clé
+        Sortie : le texte dechiffré par rapport à la clé donné</details>
     <details> <summary>Erreur possibles</summary>
-        test </details>
+        Clé impossible </details>
 </div>
 
 ---
@@ -87,7 +91,7 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id="affichage"> 
 <h2><i> affichage : </i></h2>
 <details> <summary>But</summary>
-        test </details>
+        Afficher notre programme principal</details>
     <details> <summary>Entrées | Sorties</summary>
         test </details>
     <details> <summary>Erreur possibles</summary>
