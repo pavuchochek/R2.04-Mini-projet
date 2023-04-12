@@ -5,10 +5,7 @@
     details[open] > summary {
         list-style-image: url(readme_img/arrow2.png);
     }
-    .listesommaire li{
-        padding:5px;
-        margin-right:10px;
-    }
+    
 </style>
 # R2.04-Mini-projet 
 ## **Projet 3 : Chiffrement de messages**
@@ -24,7 +21,7 @@ Créé par l'équipe 2 du groupe F composée de :
 1. [Description de la demande](#projet)
 2. [Descriptions des fonctions](#fonctions)
 3. [Documentation d'utilisation](#doc)
-4. [Aspect techniques](#techniques)
+4. [Aspects techniques](#techniques)
 
 <h1 id="projet"><b> 1.Description de la demande </b> </h1>
 Ce projet consiste à pouvoir chiffrer et à dechiffrer du texte en cconvertissant les accents.
@@ -47,9 +44,9 @@ On doit donc créer notre programme à partir de ce schéma :
 ---
 
 <div id="verifier">
-<h2><i> verifier_alphanumerique : </h2>
+<h2><i> verifier_alphanumerique :</i> </h2>
     <details> <summary>But</summary>
-        test </details>
+        Vérifier si les caractères à coder sont  </details>
     <details> <summary>Paramètres</summary>
         test </details>
     <details> <summary>Erreur possibles</summary>
@@ -60,7 +57,7 @@ On doit donc créer notre programme à partir de ce schéma :
 ---
 
 <div id="convertir_accents">
-<h2><i> convertir_accents : </h2>
+<h2><i> convertir_accents : </i> </h2>
 <details> <summary>But</summary>
         test </details>
     <details> <summary>Paramètres</summary>
@@ -72,7 +69,7 @@ On doit donc créer notre programme à partir de ce schéma :
 ---
 
 <div id="chiffrer">
-<h2><i> chiffrer : </h2>
+<h2><i> chiffrer : </i></h2>
 
 <details> <summary>But</summary>
         test </details>
@@ -85,7 +82,7 @@ On doit donc créer notre programme à partir de ce schéma :
 ---
 
 <div id ="dechiffer">
-<h2><i> dechiffrer :</h2>
+<h2><i> dechiffrer : </i></h2>
 <details> <summary style="content:f105">But</summary>
         test </details>
     <details> <summary>Paramètres</summary>
@@ -97,7 +94,7 @@ On doit donc créer notre programme à partir de ce schéma :
 ---
 
 <div id="affichage"> 
-<h2><i> affichage : </h2>
+<h2><i> affichage : </i></h2>
 <details> <summary>But</summary>
         test </details>
     <details> <summary>Paramètres</summary>
@@ -107,3 +104,16 @@ On doit donc créer notre programme à partir de ce schéma :
 </div>
 
 ---
+
+<h1 id="doc"><b> 3.Documentation d'utilisation</b></h1>
+
+## LES ETAPES 
+
+<h1 id="techniques"><b> 4.Aspect techniques</b></h1>
+
+1. L'algorithmique
+    - Voici notre algorithme naïf du chiffrage César:
+    ```
+    
+    ```
+
