@@ -1,5 +1,3 @@
-"markdown.styles":["readme_img/readme.css"]
-
 # R2.04-Mini-projet 
 ## **Projet 3 : Chiffrement de messages**
 ---
