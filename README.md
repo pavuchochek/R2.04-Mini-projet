@@ -37,13 +37,13 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id="verifier">
 <h2><i> verifier_alphanumerique :</i> </h2>
     <details> <summary>But</summary>
-        Vérifier si la chaine de caracteres ne contient pas des caracteres speciaux qui ne pourront pas etre chiffrés</details>
+        &emsp;&emsp;Vérifier si la chaine de caracteres ne contient pas des caracteres speciaux qui ne pourront pas etre chiffrés</details>
     <details> <summary>Entrées | Sorties </summary>
-        Entrée : chaine de caractères
-        Sortie : le même texte ou le message d'erreur
+        &emsp;&emsp;Entrée : chaine de caractères
+        &emsp;&emsp;Sortie : le même texte ou le message d'erreur
          </details>
     <details> <summary>Erreur possibles</summary>
-        Une erreur sera affichée *nom de l'erreur* si le texte contient des caractères specifiques
+        &emsp;&emsp;Une erreur sera affichée *nom de l'erreur* si le texte contient des caractères specifiques
        </details>
 </div>
 
@@ -53,10 +53,10 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id="convertir_accents">
 <h2><i> convertir_accents : </i> </h2>
 <details> <summary>But</summary>
-        Convertir les accents d'une chaîne de caracteres pour pouvoir chiffrer quand même la lettre </details>
+        &emsp;&emsp;Convertir les accents d'une chaîne de caracteres pour pouvoir chiffrer quand même la lettre </details>
     <details> <summary>Entrées | Sorties</summary>
-        Entrée : chaine de caractères
-        Sortie : le même texte sans les accents</details>
+        &emsp;&emsp;Entrée : chaine de caractères
+        &emsp;&emsp;Sortie : le même texte sans les accents</details>
 </div>
 
 ---
@@ -65,12 +65,12 @@ On doit donc créer notre programme à partir de ce schéma :
 <h2><i> chiffrer : </i></h2>
 
 <details> <summary>But</summary>
-        Chiffrer le message en code Cesar avec une clé</details>
+        &emsp;&emsp;Chiffrer le message en code Cesar avec une clé</details>
     <details> <summary>Entrées | Sorties</summary>
-        Entrée : chaine de caractères sans accents,clé
-        Sortie : le texte chiffré par rapport à la clé donné</details>
+        &emsp;&emsp;Entrée : chaine de caractères sans accents,clé
+        &emsp;&emsp;Sortie : le texte chiffré par rapport à la clé donné</details>
     <details> <summary>Erreur possibles</summary>
-        Clé impossible </details>
+        &emsp;&emsp;Clé impossible </details>
 </div>
 
 ---
@@ -78,12 +78,12 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id ="dechiffer">
 <h2><i> dechiffrer : </i></h2>
 <details> <summary style="content:f105">But</summary>
-        Pouvoir dechiffrer un message en ayant une clé </details>
+        &emsp;&emsp;Pouvoir dechiffrer un message en ayant une clé </details>
     <details> <summary>Entrées | Sorties</summary>
-        Entrée : chaine de caractères sans accents,clé
-        Sortie : le texte dechiffré par rapport à la clé donné</details>
+        &emsp;&emsp;Entrée : chaine de caractères sans accents,clé
+        &emsp;&emsp;Sortie : le texte dechiffré par rapport à la clé donné</details>
     <details> <summary>Erreur possibles</summary>
-        Clé impossible </details>
+        &emsp;&emsp;Clé impossible </details>
 </div>
 
 ---
@@ -91,11 +91,11 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id="affichage"> 
 <h2><i> affichage : </i></h2>
 <details> <summary>But</summary>
-        Afficher notre programme principal</details>
+        &emsp;&emsp;Afficher notre programme principal</details>
     <details> <summary>Entrées | Sorties</summary>
-        test </details>
+        &emsp;&emsp;test </details>
     <details> <summary>Erreur possibles</summary>
-        test </details>
+        &emsp;&emsp;test </details>
 </div>
 
 ---
@@ -108,7 +108,7 @@ On doit donc créer notre programme à partir de ce schéma :
 1. L'algorithmique
     - Notre algorithme naïf du chiffrage de César:
     
-    <code>
+    <pre>
     Choix de la clé (nombre entre 1 et 25)
         Tant que le message n'est pas chiffré en entier :
 	    Lire la lettre
@@ -118,10 +118,10 @@ On doit donc créer notre programme à partir de ce schéma :
     Afficher le message code
 
     Pour dechiffrer, même méthode avec clé = - clé
-    </code>
+    </pre>
     - Notre algortithme naïf du Vigenère:
 
-    <code>
+    <pre>
     Choix de la clé (correspondant à un mot)
     Tant que le message n'est pas chiffré en entier :
 	    Lire la lettre
@@ -131,4 +131,8 @@ On doit donc créer notre programme à partir de ce schéma :
     Afficher le message codé
 
     TexteChiffreFinal[i] = ( TexteClair[i] + Cle[i] ) mod 26
-    </code>
+    </pre>
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<progress> </progress>
+
+<h2> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;WORK IN PROGRESS</h2>
