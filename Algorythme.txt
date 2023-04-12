@@ -1,0 +1,34 @@
+Algorythme cesar :
+
+Choix de la cle (nombre entre 1 et 25)
+Tant que le message n'est pas chiffre en entier :
+	Lire la lettre
+	Attribuer a la lettre son correspondant grace a la cle (si lettre = A et cle = 3, alors lettre = D)
+	Remplacer le correspondant dans le message
+	Passer a la lettre suivante
+Afficher le message code
+
+Pour dechiffrer, meme methode avec cle = - cle
+
+
+
+
+
+
+Algorythme Vigenere :
+
+Choix de la cle (correspondant a un mot)
+Tant que le message n'est pas chiffre en entier :
+	Lire la lettre
+	Attribuer a la lettre son correspondant grace a la cle et a sa position (si lettre = A, cle = MUSIQUE et position = 3, alors lettre = S)
+	Remplacer le correspondant dans le message
+	Passer a la lettre suivante
+Afficher le message code
+
+TexteChiffreFinal[i] = ( TexteClair[i] + Clef[i] ) mod 26
+
+
+
+
+
+
