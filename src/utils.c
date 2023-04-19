@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #define BUFFER 512
 
 char * user_input(int *input_size) {
@@ -32,45 +31,52 @@ int similar_ord(const char str[2]) {
     return c1 + c2;
 }
 
+int remove_accent(char dest[],const char src[]) {
+    int i_dest = 0;
 
-    int remove_accent(char dest[],const char src[]) {
-        int i_dest = 0;
+    for (int i_src = 0 ; src[i_src] != '\0' ; i_src++) {
 
-        for (int i_src = 0 ; src[i_src] != '\0' ; i_src++) {
-
-            if ((src[i_src] >> 6) > 1) {
-                printf("nul\n");
-                // plus de 2 octets : caractère inconnu
-                return -1;
-            }
-            else if (src[i_src] >> 7) {
-                // 2 octets
-                int n = valeur_scalaire(src + i_src++);
-                char c;
-                printf("%d",n);
-
-                if ((224 <= n) && (n <= 229))      c = 'a';
-                else if(231 == n) c = 'c';
-                else if ((232 <= n) && (n <= 235)) c = 'e';
-                else if ((236 <= n) && (n <= 239)) c = 'i';
-                else if ((242 <= n) && (n <= 246)) c = 'o';
-                else if ((249 <= n) && (n <= 252)) c = 'u';
-                else if(255 == n) c='y';
-                else if (339 == n){
-                    dest[i_dest++] = 'o';
-                    c = 'e';
-                }
-
-                else return -1;  // caractère inconnu
-
-                dest[i_dest++] = c;
-            }
-            else {
-                // un seul octet
-                dest[i_dest++] = src[i_src];
-            }
+        if ((src[i_src] >> 6) > 1) {
+            // plus de 2 octets : caractère inconnu
+            return -1;
         }
+        else if (src[i_src] >> 7) {
+            // 2 octets
+            int n = similar_ord(src + i_src++);
+            char c;
 
-        dest[i_dest] = '\0';
-        return 0;
+            if (83 == n){
+                dest[i_dest++] = 'o';
+                c = 'e';
+            }
+            else if(82 == n){
+                dest[i_dest++] = 'O';
+                c = 'E';
+            }
+            else if ((192<=n) && (n<=196)) c='A';
+            else if ((224 <= n) && (n <= 229))      c = 'a';
+            else if ((200<=n) && (n<=203)) c='E';
+            else if ((206==n) || (n==207)) c='I';
+            else if ((212==n) || (n==214)) c='O';
+            else if ((217<=n) && (n<=220)) c='U';
+            else if ((120==n)) c='Y';
+            else if(231 == n) c = 'c';
+            else if(199 == n) c = 'C';
+            else if ((232 <= n) && (n <= 235)) c = 'e';
+            else if ((236 <= n) && (n <= 239)) c = 'i';
+            else if ((242 <= n) && (n <= 246)) c = 'o';
+            else if ((249 <= n) && (n <= 252)) c = 'u';
+            else if(255 == n) c='y';
+            
+            else return -1;  // caractère inconnu
+            dest[i_dest++] = c;
+        }
+        else {
+            // un seul octet
+            dest[i_dest++] = src[i_src];
+        }
     }
+
+    dest[i_dest] = '\0';
+    return 0;
+}
