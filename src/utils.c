@@ -25,10 +25,10 @@ char * user_input(int *input_size) {
     return input;
 }
 
-int similar_ord(const char str[2]) {
-    unsigned char c1 = str[0] << 6;  // premier octet (tête)
-    unsigned char c2 = (unsigned char) (str[1] << 2) >> 2;  // deuxième octet (fin)
-    return c1 + c2;
+unsigned int ord(const char str[2]){
+    wchar_t ws[2];
+    mbstowcs(ws, str, 2);
+    return ws[0];
 }
 
 int remove_accent(char dest[],const char src[]) {
