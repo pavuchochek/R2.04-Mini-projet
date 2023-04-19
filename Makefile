@@ -1,5 +1,5 @@
 all:
-	gcc -I include src/main.c  -o bin/main.out
+	gcc -I include src/*.c  -o bin/main.out
 
 
 clean:

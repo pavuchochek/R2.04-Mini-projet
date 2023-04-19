@@ -22,10 +22,26 @@
 *                                                                             *
 *  Nom du fichier :                                                           *
 *                                                                             *
-******************************************************************************/******************************************************************************/
+******************************************************************************/
 #include <stdio.h>
+#include <string.h>
+
+#include "utils.h"
 
 void main() {
-    printf("Entrez votre message à chiffrer :");
-    char message = getchar();
+    int input_size;
+    char *input = user_input(&input_size);
+    char msg[input_size] ;
+    remove_accent(msg,input);
+    
+    //printf("Input %s\n\n", input);
+    printf("\n\nInput sans accent %s\n", msg);
+    //printf("entrée (taille = %d): \"%s\"\n", input_size, input);
+    //
+    //printf("Voilà la message: %s",message);
+    /*
+    for (i = 0; message[i] != '\0'; i++){
+        message[i] = tolower((unsigned char) message[i]);
+    }*/
+    
 }
