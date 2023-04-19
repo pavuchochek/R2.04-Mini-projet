@@ -26,7 +26,7 @@ char * user_input(int *input_size) {
     return input;
 }
 
-int valeur_scalaire(const char str[2]) {
+int similar_ord(const char str[2]) {
     unsigned char c1 = str[0] << 6;  // premier octet (tête)
     unsigned char c2 = (unsigned char) (str[1] << 2) >> 2;  // deuxième octet (fin)
     return c1 + c2;
