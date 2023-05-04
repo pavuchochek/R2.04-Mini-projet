@@ -65,7 +65,7 @@ char* getText()
                 if (event.key.keysym.sym == SDLK_RETURN)
                 {
                     printf("Texte saisi : %s\n", text);
-                    strcpy(text, "");
+                    //strcpy(text, "");
                     textLength = 0;
                     return text;
 
@@ -100,7 +100,7 @@ char* getText()
             return NULL;
         }*/
 
-        return strdup(text);
+    return text;
 }
 
 int main(int argc, char *argv[])
