@@ -11,6 +11,7 @@ char* getText()
     SDL_Renderer *renderer = NULL;
     SDL_bool done = SDL_FALSE;
     static char text[256] = "";
+    static char stars[256] = "";
     int textLength = 0;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -47,6 +48,8 @@ char* getText()
 
     SDL_Color color = { 0, 0, 0, 255 };
 
+    printf("Veuillez saisir un texte à coder svp");
+
     while (!done)
     {
         SDL_Event event;
@@ -60,15 +63,35 @@ char* getText()
             case SDL_TEXTINPUT:
                 strcat(text, event.text.text);
                 textLength++;
+                for (int i; i<textLength; i++){
+                    stars[i]="a";
+                    printf("Taille de stars actuelle : %d\n", i);
+                }
+
+                SDL_Surface *surface = TTF_RenderText_Blended(font, stars, color);
+                SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+                
+                int textWidth, textHeight;
+                SDL_QueryTexture(texture, NULL, NULL, &textWidth, &textHeight);
+                
+                SDL_Rect textRect = { (640 - textWidth) / 2, (480 - textHeight) / 2, textWidth, textHeight };
+                
+                SDL_RenderCopy(renderer, texture, NULL, &textRect);
+                
+                SDL_RenderPresent(renderer);
+
+                SDL_DestroyTexture(texture);
+                SDL_FreeSurface(surface);
+
                 break;
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_RETURN)
                 {
                     printf("Texte saisi : %s\n", text);
-                    //strcpy(text, "");
+                    printf("Taille de 'text' : %d\n", textLength);
                     textLength = 0;
-                    return text;
-
+                    done = SDL_TRUE;
+                    break;
                 }
                 break;
             default:
@@ -76,29 +99,12 @@ char* getText()
             }
         }
 
-    SDL_RenderClear(renderer);
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_Surface *surface = TTF_RenderText_Blended(font, text, color);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-    SDL_Rect textRect = { 5, 212, surface->w, surface->h };
-    SDL_RenderCopy(renderer, texture, NULL, &textRect);
-    SDL_RenderPresent(renderer);
-
     SDL_Delay(3000);
 
     TTF_CloseFont(font);
-    SDL_DestroyTexture(texture);
-    SDL_FreeSurface(surface);
+
     TTF_Quit();
     SDL_Quit();
-    /*
-    if (textLength > 0) {
-            return strdup(text);
-        }else{
-            return NULL;
-        }*/
 
     return text;
 }
@@ -106,6 +112,6 @@ char* getText()
 int main(int argc, char *argv[])
 {
     char* txt = getText();
-    printf("Texte renvoyé : %s\n", txt);
+    //printf("Texte renvoyé : %s\n", txt);
     return EXIT_SUCCESS;
 }
