@@ -1,31 +1,35 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
-char* ChiffrementCesar(char phrase[],int cle){
-    char element = phrase[0];
-    char new_phrase[] = phrase ;
-    int i = 0;
-    while (element != '\0') {
-        if (element >= 'a' && element <= 'z') {
-            element = element - 'a';
-            element += cle;
-            element = (element+26) % 26;
-            element = element + 'a';
-        } else if (element >= 'A' && element <= 'Z') {
-            element = element - 'A';
-            element += cle;
-            element = (element+26) % 26;
-            element = element + 'A';
+char * ChiffrementCesar(char dest[],char phrase[],int cle){
+    char c;
+    for (int i=0; phrase[i]!='\0'; i++){
+        if (phrase[i] == ' '){
+            dest[i] = ' ';
+        }else if(isalnum(phrase[i]) != 0){
+            c = phrase[i];
+            if (c >= 'a' && c <= 'z') {
+                c = c - 'a';
+                c += cle;
+                c = (c+26) % 26;
+                c = c + 'a';
+            } else if (c >= 'A' && c <= 'Z') {
+                c = c - 'A';
+                c += cle;
+                c = (c+26) % 26;
+                c = c + 'A';
+            }
+            dest[i] = c;
+        }else{
+            printf("Mauvais char %c \n", phrase[i]);
         }
-        new_phrase[i] = element;
-        i++;
-        element = phrase[i];
     }
-    return new_phrase;
+    return dest;
 }
 
-char* DechiffrementCesar(char phrase[],int cle){
-    return ChiffrementCesar(phrase, -cle);
+char * DechiffrementCesar(char dest[],char phrase[],int cle){
+    return ChiffrementCesar(dest,phrase, -cle);
 }
 
 int Ecriture(char org[],char str[]){
@@ -45,14 +49,4 @@ int Ecriture(char org[],char str[]){
 		fclose(fichier);
 	}
 	return 0;
-}
-
-int main() {
-    char str[] = "Tais-toi mec !";
-    
-    char *code = ChiffrementCesar(str, 10);
-    printf("%s\n", str);
-    //printf("%s\n", DechiffrementCesar(str, 10));
-    Ecriture(str,code);
-    return 0;
 }
