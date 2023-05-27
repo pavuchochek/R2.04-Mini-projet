@@ -117,3 +117,12 @@ int Ecriture(char org[],char str[]){
     }
     return 0;
 }
+
+int checkalpha(char message[]){
+    for (int i = 0; message[i] != '\0'; i++)    {
+        if (!isalnum(message[i]))        {
+            return 0;
+        }
+    }
+    return 1;
+}
