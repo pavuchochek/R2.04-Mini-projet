@@ -37,10 +37,19 @@ void main() {
     //remove_accent(msg,input);
     //printf("\n%s\n", msg);
 
-    char msg[]= "abcd";
+    char msg[]= "0BÉcdéàç";
     int size_ =sizeof(msg)/sizeof(msg[0]);
     char dest[size_];
-    int key = 1;
-    char *res = ChiffrementCesar(dest,msg, key);
-    printf("message: %s \nclé %d\ncodé: %s\n",msg,key,res );
+    int rm_accent = remove_accent(dest,msg);
+    int check_alpha = checkalpha(msg);
+    if (check_alpha == 0)    {
+        printf("Le message contient des caractères non alphabétiques\n");
+    } 
+    else    {
+        printf("Le message ne contient pas de caractères non alphabétiques\n");
+    }
+    printf("%s\n%s\n",msg, dest);
+
+
 }
+    
