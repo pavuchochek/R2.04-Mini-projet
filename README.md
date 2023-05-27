@@ -132,3 +132,10 @@ On doit donc créer notre programme à partir de ce schéma :
 
     TexteChiffreFinal[i] = ( TexteClair[i] + Cle[i] ) mod 26
     </pre>
+
+# **5.Repartition des taches**
+
+|Sofia|Christian|Simon|Dorian
+|---|---|---|---|
+|A|B|C|D|
+|E|F|G|H|
