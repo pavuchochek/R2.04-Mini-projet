@@ -4,171 +4,157 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+typedef struct {
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    int textWidth;
+    int textHeight;
+    SDL_bool done;
+    char text[256];
+    int textLength;
+    char stars[256];
+} AppData;
 
-char* getText()
-{
-    SDL_Window *window = NULL;
-    SDL_Renderer *renderer = NULL;
-    SDL_bool done = SDL_FALSE;
-    static char text[256] = "";
-    static char stars[256] = "";
-    int textLength = 0;
+void initialize(AppData* appData) {
+    appData->done = SDL_FALSE;
+    appData->textLength = 0;
 
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
-        return NULL;
+        exit(1);
     }
 
-    if (TTF_Init() != 0)
-    {
+    if (TTF_Init() != 0) {
         fprintf(stderr, "Erreur TTF_Init : %s", TTF_GetError());
         SDL_Quit();
-        return NULL;
+        exit(1);
     }
 
-    window = SDL_CreateWindow("Chiffrement de César", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN); 
-                                                                                                     //(bug) SDL_WINDOW_RESIZABLE
-
-    if (window == NULL)
-    {
+    appData->window = SDL_CreateWindow("Chiffrement de César", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
+    if (appData->window == NULL) {
         fprintf(stderr, "Erreur SDL_CreateWindow : %s", SDL_GetError());
         SDL_Quit();
-        return NULL;
+        exit(1);
     }
 
-    renderer = SDL_CreateRenderer(window, -1, 0);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
+    appData->renderer = SDL_CreateRenderer(appData->window, -1, 0);
+    SDL_SetRenderDrawColor(appData->renderer, 255, 255, 255, 255);
+    SDL_RenderClear(appData->renderer);
+    SDL_RenderPresent(appData->renderer);
+}
 
-    TTF_Font *font = TTF_OpenFont("font/Lato-Black.ttf", 36);
-    if (font == NULL){
+void cleanup(AppData* appData) {
+    SDL_DestroyRenderer(appData->renderer);
+    SDL_DestroyWindow(appData->window);
+    TTF_Quit();
+    SDL_Quit();
+}
+
+void renderText(AppData* appData, TTF_Font* font, const char* text, int x, int y) {
+    SDL_Surface* picture=NULL;
+    SDL_Texture* pict=NULL;
+    SDL_Color color = { 0, 0, 0, 255 };
+    SDL_Surface* surface = TTF_RenderText_Blended(font, text, color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(appData->renderer, surface);
+
+    SDL_QueryTexture(texture, NULL, NULL, &(appData->textWidth), &(appData->textHeight));
+
+    SDL_Rect textRect = { x, y, appData->textWidth, appData->textHeight };
+
+    SDL_RenderCopy(appData->renderer, texture, NULL, &textRect);
+
+    // design (patouch)
+
+    picture = SDL_LoadBMP("font/sunshine.png");
+    pict = SDL_CreateTextureFromSurface(renderer,picture);
+    SDL_FreeSurface(picture);
+
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
+}
+
+void render(AppData* appData) {
+    TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 36);
+    if (font == NULL) {
         fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
     }
 
-    SDL_Color color = { 0, 0, 0, 255 };
+    SDL_SetRenderDrawColor(appData->renderer, 255, 255, 255, 255);
+    SDL_RenderClear(appData->renderer);
 
-    printf("Veuillez saisir un texte à coder svp\n");
+    renderText(appData, font, " ", 0, 0);
+    renderText(appData, font, "Veuillez saisir un message", (120 -(appData->textWidth) / 2), (250 - (appData->textHeight) / 2 - 150));
+    renderText(appData, font, "Votre message :", (390 - (appData->textWidth) / 2), (250 - (appData->textHeight) / 2 - 50));
+    renderText(appData, font, "Votre message code :", (270 - (appData->textWidth) / 2), (240 - (appData->textHeight) / 2 + 50));
 
-    // AFFICHAGE MESSAGE CACHE
-    SDL_Surface *surface4 = TTF_RenderText_Blended(font, "votre message : ", color);
-    SDL_Texture *texture4 = SDL_CreateTextureFromSurface(renderer, surface4);
-    
-    int textWidth, textHeight;
-    SDL_QueryTexture(texture4, NULL, NULL, &textWidth, &textHeight);
-    
-    SDL_Rect textRect4 = { (640 - textWidth) / 2, (480 - textHeight) / 2-50, textWidth, textHeight };
-    
-    SDL_RenderCopy(renderer, texture4, NULL, &textRect4);
-    
-    SDL_RenderPresent(renderer);
+    TTF_Font* font2 = TTF_OpenFont("font/Lato-BlackItalic.ttf", 24);
+    renderText(appData, font2, "Cle : 10", (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
 
-    SDL_DestroyTexture(texture4);
-    SDL_FreeSurface(surface4);
-    //------------------------------------------
+    SDL_RenderPresent(appData->renderer);
 
-    // AFFICHAGE MESSAGE CODE    
-    SDL_Surface *surface2 = TTF_RenderText_Blended(font, "votre message code : ", color);
-    SDL_Texture *texture2 = SDL_CreateTextureFromSurface(renderer, surface2);
-    
-    SDL_QueryTexture(texture2, NULL, NULL, &textWidth, &textHeight);
-    
-    SDL_Rect textRect2 = { (640 - textWidth) / 2, (480 - textHeight) / 2+50, textWidth, textHeight };
-    
-    SDL_RenderCopy(renderer, texture2, NULL, &textRect2);
-    
-    SDL_RenderPresent(renderer);
+    TTF_CloseFont(font);
+    TTF_CloseFont(font2);
+}
 
-    SDL_DestroyTexture(texture2);
-    SDL_FreeSurface(surface2);
-    //----------------------------------------------------
-
-    // AFFICHAGE CLE
-    TTF_Font *font2 = TTF_OpenFont("font/Lato-BlackItalic.ttf", 24);
-
-    SDL_Surface *surface3 = TTF_RenderText_Blended(font2, "Cle : 10", color);
-    SDL_Texture *texture3 = SDL_CreateTextureFromSurface(renderer, surface3);
-    
-    SDL_QueryTexture(texture3, NULL, NULL, &textWidth, &textHeight);
-    
-    SDL_Rect textRect3 = { (640 - textWidth) / 2-230, (480 - textHeight) / 2-46, textWidth, textHeight };
-    
-    SDL_RenderCopy(renderer, texture3, NULL, &textRect3);
-    
-    SDL_RenderPresent(renderer);
-
-    SDL_DestroyTexture(texture3);
-    SDL_FreeSurface(surface3);
-    //--------------------------------------------
-    
-    while (!done)
-    {
-        SDL_Event event;
-        SDL_WaitEvent(&event);
-
-            switch (event.type)
-            {
+void handleEvents(AppData* appData) {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
             case SDL_QUIT:
-                done = SDL_TRUE;
+                appData->done = SDL_TRUE;
                 break;
             case SDL_TEXTINPUT:
-                strcat(text, event.text.text);
-                textLength++;
-                for (int i; i<textLength; i++){
-                    stars[i]='*';
-                    printf("Taille de stars actuelle : %d\n", i);
-                }
-
-                TTF_Font *font = TTF_OpenFont("font/Lato-Black.ttf", 36);
-
-                SDL_Surface *surface = TTF_RenderText_Blended(font, stars, color); 
-                //"text" à la place de "stars" pour afficher le message (bug)
-                
-                SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-                
-                int textWidth, textHeight;
-                SDL_QueryTexture(texture, NULL, NULL, &textWidth, &textHeight);
-                
-                SDL_Rect textRect = { (640 - textWidth) / 2, (480 - textHeight) / 2, textWidth, textHeight };
-                
-                SDL_RenderCopy(renderer, texture, NULL, &textRect);
-                
-                SDL_RenderPresent(renderer);
-
-                SDL_DestroyTexture(texture);
-                SDL_FreeSurface(surface);
-
+                strcat(appData->text, event.text.text);
+                appData->textLength++;
+                printf("Texte saisi : %s\n", appData->text);
+                render(appData);
                 break;
             case SDL_KEYDOWN:
-                if (event.key.keysym.sym == SDLK_RETURN)
-                {
-                    printf("Texte saisi : %s\n", text);
-                    printf("Taille de 'text' : %d\n", textLength);
-                    textLength = 0;
-                    done = SDL_TRUE;
+                if (event.key.keysym.sym == SDLK_RETURN) {
+                    printf("Texte saisi : %s\n", appData->text);
+                    appData->textLength = 0;
+                    appData->done = SDL_TRUE;
                     break;
                 }
                 break;
             default:
                 break;
-            }
         }
+    }
+}
 
-    SDL_Delay(3000);
+char* getText() {
+    AppData appData;
+    TTF_Font* font;
 
-    TTF_CloseFont(font);
+    initialize(&appData);
 
-    TTF_Quit();
-    SDL_Quit();
+    font = TTF_OpenFont("font/Lato-Black.ttf", 36);
+    if (font == NULL) {
+        fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
+    }
+
+    printf("Veuillez saisir un texte à coder svp\n");
+
+    SDL_StartTextInput();
+
+    while (!appData.done) {
+        handleEvents(&appData);
+    }
+
+    SDL_StopTextInput();
+
+    cleanup(&appData);
+
+    char* text = malloc((appData.textLength + 1) * sizeof(char));
+    strcpy(text, appData.text);
 
     return text;
 }
 
-int main(int argc, char *argv[])
-{
+
+int main(int argc, char* argv[]) {
     char* txt = getText();
-    //ChiffrementCesar(txt,10);
     printf("Texte renvoyé : %s\n", txt);
     return EXIT_SUCCESS;
 }
