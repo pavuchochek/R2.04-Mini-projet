@@ -68,6 +68,7 @@ void renderText(AppData* appData, TTF_Font* font, const char* text, int x, int y
 }
 
 void render(AppData* appData) {
+    int c = 0;
     TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 36);
     if (font == NULL) {
         fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
@@ -84,10 +85,31 @@ void render(AppData* appData) {
     TTF_Font* font2 = TTF_OpenFont("font/Lato-BlackItalic.ttf", 24);
     renderText(appData, font2, "Cle : 10", (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
 
-    SDL_RenderPresent(appData->renderer);
+    while(c!= 1){
+
+        SDL_RenderPresent(appData->renderer);
+        c++;
+    }
+
+}
+void saisie(AppData* appData){
+
+    TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 36);
+
+    if (font == NULL) {
+
+        fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
+    }
+
+    for (int i = 0; i < appData->textLength; ++i)
+    {
+        renderText(appData, font, appData->text, (150 -(appData->textWidth) / 2), (280 - (appData->textHeight) / 2 - 150));
+        SDL_RenderPresent(appData->renderer);
+        //SDL_RenderClear(appData->renderer);
+        render(appData);
+    }
 
     TTF_CloseFont(font);
-    TTF_CloseFont(font2);
 }
 
 void handleEvents(AppData* appData) {
@@ -101,7 +123,7 @@ void handleEvents(AppData* appData) {
                 strcat(appData->text, event.text.text);
                 appData->textLength++;
                 printf("Texte saisi : %s\n", appData->text);
-                render(appData);
+                saisie(appData);
                 break;
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_RETURN) {
@@ -131,6 +153,8 @@ char* getText() {
     printf("Veuillez saisir un texte à coder svp\n");
 
     SDL_StartTextInput();
+
+    render(&appData);
 
     while (!appData.done) {
         handleEvents(&appData);
