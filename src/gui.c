@@ -63,12 +63,6 @@ void renderText(AppData* appData, TTF_Font* font, const char* text, int x, int y
 
     SDL_RenderCopy(appData->renderer, texture, NULL, &textRect);
 
-    // design (patouch)
-
-    picture = SDL_LoadBMP("font/sunshine.png");
-    pict = SDL_CreateTextureFromSurface(renderer,picture);
-    SDL_FreeSurface(picture);
-
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
 }
