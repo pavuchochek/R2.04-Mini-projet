@@ -31,22 +31,3 @@ char * ChiffrementCesar(char dest[],char phrase[],int cle){
 char * DechiffrementCesar(char dest[],char phrase[],int cle){
     return ChiffrementCesar(dest,phrase, -cle);
 }
-
-int Ecriture(char org[],char str[]){
-	//printf("%s\n", org);
-	//printf("%s\n", str);
-	FILE* fichier;
-	fichier = fopen("f1.txt", "a+");
-	if(fichier == NULL){
-		printf("Erreur a l'ouverture du fichier f1\n");
-	} else{
-		printf("Ouverture du fichier f1 reussie\n");
-		
-		fprintf(fichier,"message original : \n");
-		fprintf(fichier,"%s \n", org);
-		fprintf(fichier,"message codé : \n");
-		fprintf(fichier, "%s \n", str);
-		fclose(fichier);
-	}
-	return 0;
-}
