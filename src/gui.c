@@ -225,7 +225,9 @@ void handleEvents(AppData* appData) {
                     if (event.key.keysym.sym == SDLK_RETURN) {
                         appData->keyNumber = atoi(appData->key);
                         printf("clé saisie : %d\n", appData->keyNumber);
-                        appData->done = SDL_TRUE;
+                        res(appData);
+                        SDL_Delay(500);
+                        appData->done=SDL_TRUE;
                         break;
                     }
                     break;
@@ -237,31 +239,50 @@ void handleEvents(AppData* appData) {
 }
 
 
-char* getText() {
-    AppData appData;
+char* getText(AppData* appData) {
 
-    initialize(&appData);
+    initialize(appData);
     printf("Veuillez saisir un texte à coder svp\n");
 
     SDL_StartTextInput();
 
-    render(&appData);
+    render(appData);
 
-    while (!appData.done) {
-        handleEvents(&appData);
+    while (!appData->done) {
+        handleEvents(appData);
     }
 
     SDL_StopTextInput();
 
-    cleanup(&appData);
+    cleanup(appData);
 
-    char* text = malloc((appData.textLength + 1) * sizeof(char));
-    strcpy(text, appData.text);
+    char* text = malloc((appData->textLength + 1) * sizeof(char));
+    strcpy(text, appData->text);
 
     return text;
 }
 
 void res (AppData* appData){
+
+    if (TTF_Init() != 0) {
+        fprintf(stderr, "Erreur TTF_Init : %s", TTF_GetError());
+        SDL_Quit();
+        exit(1);
+    }
+
+    TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 24);
+    if (font == NULL) {
+        fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
+    }
+
+    renderText(appData, font, " ", 0, 0);
+    renderText(appData, font, appData->key, (80 - (appData->textWidth) / 2), (295 - (appData->textHeight) / 2));
+    SDL_RenderPresent(appData->renderer);
+
+}
+//affichage du message codé
+/*
+void output (AppData* appData){
 
     if (TTF_Init() != 0) {
         fprintf(stderr, "Erreur TTF_Init : %s", TTF_GetError());
@@ -275,16 +296,18 @@ void res (AppData* appData){
     }
 
     renderText(appData, font, " ", 0, 0);
-    renderText(appData, font, appData->key, (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
+    renderText(appData, font, out, (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
     SDL_RenderPresent(appData->renderer);
 
 }
+*/
 
-
-int main(int argc, char* argv[], AppData* appData) {
-    char* txt = getText();
+int main(int argc, char* argv[]) {
+    AppData appData;
+    char* txt = getText(&appData);
     printf("Texte renvoyé : %s\n", txt);
-    printf("Clé renvoyée : %d\n", appData->keyNumber);
-    res(appData);
+    printf("Clé renvoyée : %d\n", appData.keyNumber);
+    //char out[];
+    //ChiffrementCesar(out,txt,keyNumber);
     return EXIT_SUCCESS;
 }
