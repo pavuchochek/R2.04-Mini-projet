@@ -127,3 +127,12 @@ int checkalpha(char message[]){
     }
     return 1;
 }
+
+int check_key (char message[]){
+    for (int i = 0; message[i] != '\0'; i++)    {
+        if (!isdigit(message[i])){
+            return 0;
+        }
+    }
+    return 1;
+}
