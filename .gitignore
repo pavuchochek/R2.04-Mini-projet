@@ -1,4 +1,7 @@
+build/
+
 .vscode
 
 *.out
 *.sublime*
+*.code*
