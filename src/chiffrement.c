@@ -32,8 +32,9 @@
 char * ChiffrementCesar(char dest[],char phrase[],int cle){
     /*on defini un caractere avec lequel on va parcourir chaque lettre de la phrase*/
     char c;
+    int i;
     /*une boucle qui parcourt tout la phrase*/
-    for (int i=0; phrase[i]!='\0'; i++){
+    for (i=0; phrase[i]!='\0'; i++){
         
         /*on ne chiffre pas les espaces*/
         if (phrase[i] == ' '){
@@ -68,6 +69,7 @@ char * ChiffrementCesar(char dest[],char phrase[],int cle){
             printf("Mauvais char %c \n", phrase[i]);
         }
     }
+    dest[i] = '\0';
     return dest;
 }
 /*le dechiffrement consiste tout simplement a effectuer un chiffrement avec une clé negative*/
