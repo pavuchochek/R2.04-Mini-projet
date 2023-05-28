@@ -125,17 +125,4 @@ On doit donc créer notre programme à partir de ce schéma :
 
     Pour dechiffrer, même méthode avec clé = - clé
     </pre>
-    - Notre algortithme naïf du Vigenère:
-
-    <pre>
-    Choix de la clé (correspondant à un mot)
-    Tant que le message n'est pas chiffré en entier :
-        Lire la lettre
-        Attribuer à la lettre son correspondant grace à la clé et à sa position (si lettre = A, clé = MUSIQUE et position = 3, alors lettre = S)
-        Remplacer le correspondant dans le message
-        Passer à la lettre suivante
-    Afficher le message codé
-
-    TexteChiffreFinal[i] = ( TexteClair[i] + Cle[i] ) mod 26
-    </pre>
 
