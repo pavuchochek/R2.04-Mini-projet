@@ -147,7 +147,6 @@ void saisie(AppData* appData){
     for (int i = 0; i < appData->textLength; ++i) {
         renderTextInput(appData, font);
         SDL_RenderPresent(appData->renderer);
-        //SDL_RenderClear(appData->renderer);
     }
 
     TTF_CloseFont(font);
