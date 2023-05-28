@@ -5,6 +5,10 @@
 #include <SDL2/SDL.h> // SDL va permettre la création de l'interface
 #include <SDL2/SDL_ttf.h> // TTF va permettre l'écriture dans l'interface
 
+//importation des autres fichiers
+#include "utils.h"
+#include "chiffrement.h"
+
 // definition des constantes de la taille de la fenetre
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -21,6 +25,7 @@ typedef struct {
     TTF_Font* font; // déclaration de la police d'écriture
     char key[256]; // tableau pour la saisie de la clé
     int keyNumber; // convertion du tableau en integer
+    char out[256]; // stockage du message codé
 } AppData;
 
 void initialize(AppData* appData) {
@@ -201,6 +206,26 @@ void saisie(AppData* appData){
     TTF_CloseFont(font);
 }
 
+//affichage du message codé
+void output (AppData* appData){
+
+    if (TTF_Init() != 0) {
+        fprintf(stderr, "Erreur TTF_Init : %s", TTF_GetError());
+        SDL_Quit();
+        exit(1);
+    }
+
+    TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 36);
+    if (font == NULL) {
+        fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
+    }
+
+    renderText(appData, font, " ", 0, 0);
+    renderText(appData, font,appData->out, (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
+    SDL_RenderPresent(appData->renderer);
+
+}
+
 // attente de la saisie utilisateur
 
 int count =0; // pour permettre de changer de champ entre le message a coder et la clé 
@@ -224,7 +249,6 @@ void handleEvents(AppData* appData) {
                         printf("Texte saisi : %s\n", appData->text);
                         appData->textLength = 0;
                         count++;
-                        printf("count : %d\n", count);
                         break; 
                     }
                     break;
@@ -247,7 +271,8 @@ void handleEvents(AppData* appData) {
                         appData->keyNumber = atoi(appData->key);
                         printf("clé saisie : %d\n", appData->keyNumber);
                         res(appData);
-                        SDL_Delay(500);
+                        ChiffrementCesar(appData->out,appData->text,appData->keyNumber);
+                        SDL_Delay(3000);
                         appData->done=SDL_TRUE;
                         break;
                     }
@@ -304,35 +329,13 @@ void res (AppData* appData){
     SDL_RenderPresent(appData->renderer);
 
 }
-//affichage du message codé
-/*
-void output (AppData* appData){
-
-    if (TTF_Init() != 0) {
-        fprintf(stderr, "Erreur TTF_Init : %s", TTF_GetError());
-        SDL_Quit();
-        exit(1);
-    }
-
-    TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 36);
-    if (font == NULL) {
-        fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
-    }
-
-    renderText(appData, font, " ", 0, 0);
-    renderText(appData, font, out, (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
-    SDL_RenderPresent(appData->renderer);
-
-}
-*/
 
 int main(int argc, char* argv[]) {
     AppData appData;
     char* txt = getText(&appData);
     printf("Texte renvoyé : %s\n", txt);
     printf("Clé renvoyée : %d\n", appData.keyNumber);
-    //char out[];
-    //ChiffrementCesar(out,txt,keyNumber);
-    cleanup(appData);
+    char out[256];
+    printf(ChiffrementCesar(appData.out,appData.text,appData.keyNumber));
     return EXIT_SUCCESS;
 }
