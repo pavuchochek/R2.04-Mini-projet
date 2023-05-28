@@ -1,34 +1,40 @@
+//importation des bibliothèques nécessaires
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL.h> // SDL va permettre la création de l'interface
+#include <SDL2/SDL_ttf.h> // TTF va permettre l'écriture dans l'interface
 
+// definition des constantes de la taille de la fenetre
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
+//définition de la structure appData pour organiser les variables entre les fonctions
 typedef struct {
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    int textWidth;
-    int textHeight;
-    SDL_bool done;
-    char text[256];
-    int textLength;
-    char stars[256];
-    TTF_Font* font;
-    char key[256];
-    int keyNumber;
+    SDL_Window* window; // fenetre
+    SDL_Renderer* renderer; // contenu de la fenetre
+    int textWidth; // largeur du texte saisi 
+    int textHeight; // longueur du texte saisi
+    SDL_bool done; // booléen pour lancer la réception des actions sur la fenetre
+    char text[256]; // tableau de char pour stocker la saisie
+    int textLength; // taille du tableau pour les calculs liés à l'affichage
+    TTF_Font* font; // déclaration de la police d'écriture
+    char key[256]; // tableau pour la saisie de la clé
+    int keyNumber; // convertion du tableau en integer
 } AppData;
 
 void initialize(AppData* appData) {
     appData->done = SDL_FALSE;
     appData->textLength = 0;
 
+    //initialisation de la fenetre
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
         exit(1);
     }
+
+    //initialisation de la police 
 
     if (TTF_Init() != 0) {
         fprintf(stderr, "Erreur TTF_Init : %s", TTF_GetError());
@@ -36,12 +42,16 @@ void initialize(AppData* appData) {
         exit(1);
     }
 
+    //création de la fenetre
+
     appData->window = SDL_CreateWindow("Chiffrement de César", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
     if (appData->window == NULL) {
         fprintf(stderr, "Erreur SDL_CreateWindow : %s", SDL_GetError());
         SDL_Quit();
         exit(1);
     }
+
+    //création du contenu de la fenetre (un rectangle blanc)
 
     appData->renderer = SDL_CreateRenderer(appData->window, -1, 0);
     SDL_SetRenderDrawColor(appData->renderer, 255, 255, 255, 255);
@@ -53,12 +63,16 @@ void initialize(AppData* appData) {
     SDL_SetRenderTarget(appData->renderer, NULL);
 }
 
+// fonction de nettoyage de la mémoire
+
 void cleanup(AppData* appData) {
     SDL_DestroyRenderer(appData->renderer);
     SDL_DestroyWindow(appData->window);
     TTF_Quit();
     SDL_Quit();
 }
+
+// fonction d'écriture dans la fenetre
 
 void renderText(AppData* appData, TTF_Font* font, const char* text, int x, int y) {
     
@@ -75,6 +89,8 @@ void renderText(AppData* appData, TTF_Font* font, const char* text, int x, int y
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
 }
+
+// affichage du menu dans la fenetre 
 
 void render(AppData* appData) {
     int c = 0;
@@ -102,6 +118,8 @@ void render(AppData* appData) {
 
 }
 
+// affichage de la saisie utilisateur
+
 void renderTextInput(AppData* appData, TTF_Font* font) {
     
     SDL_SetRenderDrawColor(appData->renderer, 255, 255, 255, 255);
@@ -117,8 +135,6 @@ void renderTextInput(AppData* appData, TTF_Font* font) {
 
     rectWidth = (rectWidth > 640) ? 640 : rectWidth;
     rectHeight = (rectHeight > 480) ? 480 : rectHeight;
-
-
     
     int rectX = (640 - rectWidth) / 2;
     int rectY = 280 - (textHeight / 2) - 150;
@@ -132,6 +148,8 @@ void renderTextInput(AppData* appData, TTF_Font* font) {
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
 }
+
+// fonction d'écriture de la clé dans la fenetre  
 
 void renderKeyInput(AppData* appData, TTF_Font* font) {
     
@@ -162,6 +180,7 @@ void renderKeyInput(AppData* appData, TTF_Font* font) {
     SDL_FreeSurface(surface);
 }
 
+// affichage de la saisie dans la fenetre
 
 void saisie(AppData* appData){
 
@@ -182,7 +201,9 @@ void saisie(AppData* appData){
     TTF_CloseFont(font);
 }
 
-int count =0;
+// attente de la saisie utilisateur
+
+int count =0; // pour permettre de changer de champ entre le message a coder et la clé 
 
 void handleEvents(AppData* appData) {
     SDL_Event event;
@@ -238,6 +259,7 @@ void handleEvents(AppData* appData) {
     }
 }
 
+//affichage et stockage du message saisi 
 
 char* getText(AppData* appData) {
 
@@ -261,6 +283,8 @@ char* getText(AppData* appData) {
 
     return text;
 }
+
+//affichage de la clé saisie
 
 void res (AppData* appData){
 
@@ -309,5 +333,6 @@ int main(int argc, char* argv[]) {
     printf("Clé renvoyée : %d\n", appData.keyNumber);
     //char out[];
     //ChiffrementCesar(out,txt,keyNumber);
+    cleanup(appData);
     return EXIT_SUCCESS;
 }
