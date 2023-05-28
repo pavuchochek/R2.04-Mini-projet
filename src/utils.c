@@ -2,25 +2,25 @@
 *  ASR => 4R2.04                                                              *
 *******************************************************************************
 *                                                                             *
-*  N° de Sujet :  3                                                            *
+*  N° de Sujet :  3                                                           *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Intitulé :   Differentes fonctions utiles dans le projet                                                              *
+*  Intitulé :   Differentes fonctions utiles dans le projet                   *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Nom-prénom1 :  Sofia Gribanova                                                    *
+*  Nom-prénom1 :  Sofia Gribanova                                             *
 *                                                                             *
-*  Nom-prénom2 :  Simon Armand                                                           *
+*  Nom-prénom2 :  Simon Armand                                                *
 *                                                                             *
-*  Nom-prénom3 :  Christian Gikapa                                                         *
+*  Nom-prénom3 :  Christian Gikapa                                            *
 *                                                                             *
-*  Nom-prénom4 :  Dorian Levasseur                                                       *
+*  Nom-prénom4 :  Dorian Levasseur                                            *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Nom du fichier :     utils                                                     *
+*  Nom du fichier :     utils                                                 *
 *                                                                             *
 ******************************************************************************/
 
@@ -28,13 +28,15 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <ctype.h>
-/*constante du buffer*/
+
+/*Constante du buffer*/
 #define BUFFER 512
-/*création d'un input adapté pour notre programme*/
+
+/*Création d'un input adapté pour notre programme*/
 char * user_input(int *input_size) {
 
     char * input = malloc(sizeof(char) * BUFFER);
-    *input_size = 0;  //initialisation de la taille de l'input actuel
+    *input_size = 0;  //initialisation de la taille de l'input actuelle
 
     // saisie
     input[0] = getchar();
@@ -48,20 +50,20 @@ char * user_input(int *input_size) {
 
     // ajout de l'octet nul
     input[(*input_size)++] = '\0';
-    // ajustement de la taille du pointeur au texte
-    //input = realloc(input, sizeof(char) * (*input_size));
 
     return input;
 }
-/*ord qui nous est utile pour determiner 
-la valeur des caracteres avec accent
-pour detecter l'intervalle à remplacer par une lettre*/
+
+/*ord qui nous est utile pour déterminer 
+la valeur des caractères avec accent
+pour détecter l'intervalle à remplacer par une lettree*/
 unsigned int ord(const char str[2]){
     wchar_t ws[2];
     mbstowcs(ws, str, 2);
     return ws[0];
 }
-/*fonction qui permet d'enlever les accents grace à ord*/
+
+/*fonction qui permet d'enlever les accents grâce à ord*/
 int remove_accent(char dest[],const char src[]) {
     
 
@@ -80,8 +82,8 @@ int remove_accent(char dest[],const char src[]) {
             return -1;
         }
         if (src[i_src] >> 7) {
-            // 2 octets signifie que c'est une lettre avec accent avec un poids particulier
-            /*on utilise ord pour avoir le poid du caractere*/
+            // 2 octets signifient que c'est une lettre avec accent avec un poids particulier
+            /*on utilise ord pour avoir le poids du caractère.*/
             unsigned int n = ord(src + i_src++);
             char c;
 
@@ -148,6 +150,7 @@ int Ecriture(char org[],char str[]){
     }
     return 0;
 }
+
 /*verifie si c'est bien des lettres ou des chiffres*/
 int checkalpha(char message[]){
     for (int i = 0; message[i] != '\0'; i++)    {
@@ -157,6 +160,7 @@ int checkalpha(char message[]){
     }
     return 1;
 }
+
 /*verifie que la clé est bien numérique*/
 int check_key (char message[]){
     for (int i = 0; message[i] != '\0'; i++)    {

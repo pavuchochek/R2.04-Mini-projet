@@ -29,7 +29,7 @@ On doit donc créer notre programme à partir de ce schéma :
 ### **SOMMAIRE DES FONCTIONS**
 1. [checkalpha](#verifier)
 2. [remove_accent](#convertir_accents)
-3. [chifChiffrementCesarfrer](#chiffrer)
+3. [ChiffrementCesar](#chiffrer)
 4. [DechiffrementCesar](#dechiffrer)
 5. [affichage](#affichage)
 ---
@@ -76,7 +76,7 @@ On doit donc créer notre programme à partir de ce schéma :
 ---
 
 <div id ="dechiffer">
-<h2><i> dechiffDechiffrementCesar : </i></h2>
+<h2><i> DechiffrementCesar : </i></h2>
 <details> <summary style="content:f105">But</summary>
         &emsp;&emsp;Pouvoir dechiffrer un message en ayant une clé </details>
     <details> <summary>Entrées | Sorties</summary>

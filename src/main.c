@@ -6,7 +6,7 @@
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Intitulé :  Chiffrement de messages    main                                     *
+*  Intitulé :  Chiffrement de messages    main                                *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -20,12 +20,13 @@
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Nom du fichier : main                                                          *
+*  Nom du fichier : main                                                      *
 *                                                                             *
 ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 /*on immporte nos fonctions*/
 #include "utils.h"
 #include "chiffrement.h"
