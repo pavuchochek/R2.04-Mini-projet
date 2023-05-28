@@ -6,7 +6,7 @@
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Intitulé :  Chiffrement de messages                                        *
+*  Intitulé :  Chiffrement de messages    main                                     *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -20,12 +20,12 @@
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Nom du fichier :                                                           *
+*  Nom du fichier : main                                                          *
 *                                                                             *
 ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
-
+/*on immporte nos fonctions*/
 #include "utils.h"
 #include "chiffrement.h"
 
@@ -36,9 +36,9 @@ void main() {
     //char msg[input_size] ;
     //remove_accent(msg,input);
     //printf("\n%s\n", msg);
-
+    /*on defini un message pour pouvoir tester les accents*/
     char msg[]= "0BÉcdéàç";
-    int size_ =sizeof(msg)/sizeof(msg[0]);
+    int size_ =sizeof(msg)/sizeof(msg[0]); 
     char dest[size_];
     int rm_accent = remove_accent(dest,msg);
     int check_alpha = checkalpha(msg);

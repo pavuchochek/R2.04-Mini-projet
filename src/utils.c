@@ -1,14 +1,40 @@
+/******************************************************************************
+*  ASR => 4R2.04                                                              *
+*******************************************************************************
+*                                                                             *
+*  N° de Sujet :  3                                                            *
+*                                                                             *
+*******************************************************************************
+*                                                                             *
+*  Intitulé :   Differentes fonctions utiles dans le projet                                                              *
+*                                                                             *
+*******************************************************************************
+*                                                                             *
+*  Nom-prénom1 :  Sofia Gribanova                                                    *
+*                                                                             *
+*  Nom-prénom2 :  Simon Armand                                                           *
+*                                                                             *
+*  Nom-prénom3 :  Christian Gikapa                                                         *
+*                                                                             *
+*  Nom-prénom4 :  Dorian Levasseur                                                       *
+*                                                                             *
+*******************************************************************************
+*                                                                             *
+*  Nom du fichier :     utils                                                     *
+*                                                                             *
+******************************************************************************/
+
 #include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <ctype.h>
-
+/*constante du buffer*/
 #define BUFFER 512
-
+/*création d'un input adapté pour notre programme*/
 char * user_input(int *input_size) {
 
     char * input = malloc(sizeof(char) * BUFFER);
-    *input_size = 0;  // IL FAUT INITIALISER SA MERE LA PUTE
+    *input_size = 0;  //initialisation de la taille de l'input actuel
 
     // saisie
     input[0] = getchar();
@@ -27,13 +53,15 @@ char * user_input(int *input_size) {
 
     return input;
 }
-
+/*ord qui nous est utile pour determiner 
+la valeur des caracteres avec accent
+pour detecter l'intervalle à remplacer par une lettre*/
 unsigned int ord(const char str[2]){
     wchar_t ws[2];
     mbstowcs(ws, str, 2);
     return ws[0];
 }
-
+/*fonction qui permet d'enlever les accents grace à ord*/
 int remove_accent(char dest[],const char src[]) {
     
 
@@ -52,7 +80,8 @@ int remove_accent(char dest[],const char src[]) {
             return -1;
         }
         if (src[i_src] >> 7) {
-            // 2 octets
+            // 2 octets signifie que c'est une lettre avec accent avec un poids particulier
+            /*on utilise ord pour avoir le poid du caractere*/
             unsigned int n = ord(src + i_src++);
             char c;
 
@@ -60,6 +89,7 @@ int remove_accent(char dest[],const char src[]) {
                 dest[i_dest++] = 'A';
                 c = 'E';
             }
+            /* et on utilise ses poids pour remplacer par les bonnes lettres*/
             else if(199 == n) c = 'C';
             else if ((192<=n) && (n<=196)) c='A';
             else if ((200<=n) && (n<=203)) c='E';
@@ -90,7 +120,7 @@ int remove_accent(char dest[],const char src[]) {
             dest[i_dest++] = c;
         }
         else {
-            // un seul octet
+            // un seul octet signie que c'est une lettre sans accent
             dest[i_dest++] = src[i_src];
         }
     }
@@ -99,7 +129,7 @@ int remove_accent(char dest[],const char src[]) {
     return 0;
 }
 
-
+/*ecriture du message codé et decodé dans un fichier*/
 int Ecriture(char org[],char str[]){
     //printf("%s\n", org);
     //printf("%s\n", str);
@@ -118,7 +148,7 @@ int Ecriture(char org[],char str[]){
     }
     return 0;
 }
-
+/*verifie si c'est bien des lettres ou des chiffres*/
 int checkalpha(char message[]){
     for (int i = 0; message[i] != '\0'; i++)    {
         if (!isalnum(message[i])){
@@ -127,7 +157,7 @@ int checkalpha(char message[]){
     }
     return 1;
 }
-
+/*verifie que la clé est bien numérique*/
 int check_key (char message[]){
     for (int i = 0; message[i] != '\0'; i++)    {
         if (!isdigit(message[i])){
