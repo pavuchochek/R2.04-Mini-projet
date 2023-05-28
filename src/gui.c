@@ -6,9 +6,6 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
-#define BUTTON_WIDTH 50
-#define BUTTON_HEIGHT 30
-#define NUM_BUTTONS 10
 
 typedef struct {
     SDL_Window* window;
@@ -19,10 +16,7 @@ typedef struct {
     char text[256];
     int textLength;
     char stars[256];
-    SDL_Texture* buttonTexture;
     TTF_Font* font;
-    SDL_Rect buttonRects[NUM_BUTTONS];
-    SDL_bool buttonPressed[NUM_BUTTONS];
 } AppData;
 
 void initialize(AppData* appData) {
@@ -52,25 +46,12 @@ void initialize(AppData* appData) {
     SDL_RenderClear(appData->renderer);
     SDL_RenderPresent(appData->renderer);
 
-
-    appData->buttonTexture = SDL_CreateTexture(appData->renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, BUTTON_WIDTH, BUTTON_HEIGHT);
-    SDL_SetTextureBlendMode(appData->buttonTexture, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderTarget(appData->renderer, appData->buttonTexture);
     SDL_SetRenderDrawColor(appData->renderer, 0, 0, 0, 150);
     SDL_RenderFillRect(appData->renderer, NULL);
     SDL_SetRenderTarget(appData->renderer, NULL);
-
-    for (int i = 0; i < NUM_BUTTONS; i++) {
-        appData->buttonRects[i].x = (SCREEN_WIDTH / 2) - (NUM_BUTTONS * BUTTON_WIDTH / 2) + i * BUTTON_WIDTH;
-        appData->buttonRects[i].y = 240;
-        appData->buttonRects[i].w = BUTTON_WIDTH;
-        appData->buttonRects[i].h = BUTTON_HEIGHT;
-        appData->buttonPressed[i] = SDL_FALSE;
-    }
 }
 
 void cleanup(AppData* appData) {
-    SDL_DestroyTexture(appData->buttonTexture);
     SDL_DestroyRenderer(appData->renderer);
     SDL_DestroyWindow(appData->window);
     TTF_Quit();
@@ -108,17 +89,6 @@ void render(AppData* appData) {
     renderText(appData, font, "Veuillez saisir un message", (120 -(appData->textWidth) / 2), (180 - (appData->textHeight) / 2 - 150));
     renderText(appData, font, "Votre message :", (390 - (appData->textWidth) / 2), (235 - (appData->textHeight) / 2 - 150));
     renderText(appData, font, "Votre message code :", (270 - (appData->textWidth) / 2), (350 - (appData->textHeight) / 2 - 150));
-
-    for (int i = 0; i < NUM_BUTTONS; i++) {
-        SDL_SetRenderDrawColor(appData->renderer, 255, 255, 255, 255);
-        if (appData->buttonPressed[i]) {
-            SDL_SetRenderDrawColor(appData->renderer, 200, 200, 200, 255);
-        }
-        SDL_RenderCopy(appData->renderer, appData->buttonTexture, NULL, &(appData->buttonRects[i]));
-        char buttonText[2];
-        snprintf(buttonText, sizeof(buttonText), "%d", i + 1);
-        renderText(appData, appData->font, buttonText, appData->buttonRects[i].x + (BUTTON_WIDTH - appData->textWidth) / 2, appData->buttonRects[i].y + (BUTTON_HEIGHT - appData->textHeight) / 2);
-    }
 
     TTF_Font* font2 = TTF_OpenFont("font/Lato-BlackItalic.ttf", 24);
     renderText(appData, font2, "Cle : 10", (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
@@ -202,26 +172,6 @@ void handleEvents(AppData* appData) {
                     appData->textLength = 0;
                     appData->done = SDL_TRUE;
                     break;
-                }
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                if (event.button.button == SDL_BUTTON_LEFT) {
-                    int mouseX = event.button.x;
-                    int mouseY = event.button.y;
-                    for (int i = 0; i < NUM_BUTTONS; i++) {
-                        if (mouseX >= appData->buttonRects[i].x && mouseX <= appData->buttonRects[i].x + appData->buttonRects[i].w &&
-                            mouseY >= appData->buttonRects[i].y && mouseY <= appData->buttonRects[i].y + appData->buttonRects[i].h) {
-                            appData->buttonPressed[i] = SDL_TRUE;
-                            break;
-                        }
-                    }
-                }
-                break;
-            case SDL_MOUSEBUTTONUP:
-                if (event.button.button == SDL_BUTTON_LEFT) {
-                    for (int i = 0; i < NUM_BUTTONS; i++) {
-                        appData->buttonPressed[i] = SDL_FALSE;
-                    }
                 }
                 break;
             default:
