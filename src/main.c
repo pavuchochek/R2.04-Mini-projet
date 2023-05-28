@@ -32,14 +32,14 @@
 #include "chiffrement.h"
 
 
-char choices[][23] = {"chiffrer un message", "déchiffrer un message",  "quitter le programme"};
+char choices[][23] = {"quitter le programme","chiffrer un message", "déchiffrer un message",  };
 
 void main() {
     printf("Bienvenue dans le programme de chiffrement de messages\n\n");
     printf("Que souhaitez-vous faire ?\n");
     printf("1 - Chiffrer un message\n");
     printf("2 - Déchiffrer un message\n");
-    printf("3 - Quitter\n");
+    printf("0 - Quitter\n");
 
     printf("Votre choix : ");
     fflush(stdout);
@@ -54,7 +54,7 @@ void main() {
 
     int choice = atoi(choice_input);
 
-    while(choice != 1 && choice != 2 && choice != 3){
+    while(choice != 1 && choice != 2 && choice != 0){
         printf("Choix invalide, votre choix doit être 1, 2 ou 3\n");
         printf("Votre choix : ");
         fflush(stdout);
@@ -67,9 +67,9 @@ void main() {
         }
         choice = atoi(choice_input);
     }
-    printf("Vous avez choisi de %s\n\n", choices[choice -1]);
+    printf("Vous avez choisi de %s\n\n", choices[choice ]);
 
-    if (choice == 3){
+    if (choice == 0){
         return;
     }
 
@@ -113,6 +113,10 @@ void main() {
         result = DechiffrementCesar(final_message, msg_without_accent, key);
     }
     printf("Votre message final est : %s\n", result);
+
+
+    Ecriture(final_message, result);
+    printf("Résultat sauvegarder dans f1.txt\n");
     return;
 }
     

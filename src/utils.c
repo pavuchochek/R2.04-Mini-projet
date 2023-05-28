@@ -140,11 +140,10 @@ int Ecriture(char org[],char str[]){
     if(fichier == NULL){
         printf("Erreur a l'ouverture du fichier f1\n");
     } else{
-        printf("Ouverture du fichier f1 reussie\n");
         
         fprintf(fichier,"message original : \n");
         fprintf(fichier,"%s \n", org);
-        fprintf(fichier,"message codé : \n");
+        fprintf(fichier,"message codé/décodé : \n");
         fprintf(fichier, "%s \n", str);
         fclose(fichier);
     }
