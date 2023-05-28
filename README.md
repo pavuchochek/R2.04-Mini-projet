@@ -27,63 +27,61 @@ On doit donc créer notre programme à partir de ce schéma :
 ## **Voici les fonctions developpées:**
 
 ### **SOMMAIRE DES FONCTIONS**
-1. [verifier_alphanumerique](#verifier)
-2. [convertir_accents](#convertir_accents)
-3. [chiffrer](#chiffrer)
-4. [dechiffrer](#dechiffrer)
+1. [checkalpha](#verifier)
+2. [remove_accent](#convertir_accents)
+3. [chifChiffrementCesarfrer](#chiffrer)
+4. [DechiffrementCesar](#dechiffrer)
 5. [affichage](#affichage)
 ---
 
 <div id="verifier">
-<h2><i> verifier_alphanumerique :</i> </h2>
+<h2><i> checkalpha :</i> </h2>
     <details> <summary>But</summary>
         &emsp;&emsp;Vérifier si la chaine de caracteres ne contient pas des caracteres speciaux qui ne pourront pas etre chiffrés</details>
     <details> <summary>Entrées | Sorties </summary>
         &emsp;&emsp;Entrée : chaine de caractères<br>
-        &emsp;&emsp;Sortie : le même texte ou le message d'erreur
+        &emsp;&emsp;Sortie : 1 ou 0
          </details>
-    <details> <summary>Erreur possibles</summary>
-        &emsp;&emsp;Une erreur sera affichée *nom de l'erreur* si le texte contient des caractères specifiques
-       </details>
 </div>
 
 
 ---
 
 <div id="convertir_accents">
-<h2><i> convertir_accents : </i> </h2>
+<h2><i> remove_accent : </i> </h2>
 <details> <summary>But</summary>
         &emsp;&emsp;Convertir les accents d'une chaîne de caracteres pour pouvoir chiffrer quand même la lettre </details>
     <details> <summary>Entrées | Sorties</summary>
         &emsp;&emsp;Entrée : chaine de caractères<br>
         &emsp;&emsp;Sortie : le même texte sans les accents</details>
+    <details> <summary>Erreur possibles</summary>
+        &emsp;&emsp;Retourne -1 si caractère inconnu
+         </details>
 </div>
 
 ---
 
 <div id="chiffrer">
-<h2><i> chiffrer : </i></h2>
+<h2><i> ChiffrementCesar : </i></h2>
 
 <details> <summary>But</summary>
         &emsp;&emsp;Chiffrer le message en code Cesar avec une clé</details>
     <details> <summary>Entrées | Sorties</summary>
-        &emsp;&emsp;Entrée : chaine de caractères sans accents,clé<br>
+        &emsp;&emsp;Entrée : chaine de caractères sans accents,cl<br>
         &emsp;&emsp;Sortie : le texte chiffré par rapport à la clé donné</details>
     <details> <summary>Erreur possibles</summary>
-        &emsp;&emsp;Clé impossible </details>
+        &emsp;&emsp;Caractère  impossible:"Mauvais char"</details>
 </div>
 
 ---
 
 <div id ="dechiffer">
-<h2><i> dechiffrer : </i></h2>
+<h2><i> dechiffDechiffrementCesar : </i></h2>
 <details> <summary style="content:f105">But</summary>
         &emsp;&emsp;Pouvoir dechiffrer un message en ayant une clé </details>
     <details> <summary>Entrées | Sorties</summary>
         &emsp;&emsp;Entrée : chaine de caractères sans accents,clé<br>
         &emsp;&emsp;Sortie : le texte dechiffré par rapport à la clé donné</details>
-    <details> <summary>Erreur possibles</summary>
-        &emsp;&emsp;Clé impossible </details>
 </div>
 
 ---
@@ -91,17 +89,25 @@ On doit donc créer notre programme à partir de ce schéma :
 <div id="affichage"> 
 <h2><i> affichage : </i></h2>
 <details> <summary>But</summary>
-        &emsp;&emsp;Afficher notre programme principal</details>
-    <details> <summary>Entrées | Sorties</summary>
-        &emsp;&emsp;test </details>
+        &emsp;&emsp;Avoir une interface graphique à partir de SDL</details>
     <details> <summary>Erreur possibles</summary>
-        &emsp;&emsp;test </details>
+        &emsp;&emsp;
+        Si l'utilisateur rate sa saisie l'interface on ne peut pas revenir en arrière et donc faudrait retaper le message.
+        Sinon plusieurs erreurs possibles en cas de texte manquants ou de bug graphiques comme par exemple "erreur de font".
+        Les messages d'erreurs sont explicites.
+    </details>
 </div>
 
 ---
 <h1 id="doc"><b> 3.Documentation d'utilisation</b></h1>
 
 ## LES ETAPES 
+### Sans interface graphique
+- Lancer ./bin/main.out avec le terminal
++ Utiliser le menu et profiter du programme
+### Avec interface graphique
+
+
 
 <h1 id="techniques"><b> 4.Aspect techniques</b></h1>
 
@@ -133,9 +139,3 @@ On doit donc créer notre programme à partir de ce schéma :
     TexteChiffreFinal[i] = ( TexteClair[i] + Cle[i] ) mod 26
     </pre>
 
-# **5.Repartition des taches**
-
-|Sofia|Christian|Simon|Dorian
-|---|---|---|---|
-|A|B|C|D|
-|E|F|G|H|
