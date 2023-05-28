@@ -10,8 +10,12 @@ Créé par l'équipe 2 du groupe F composée de :
 ---
 ## PREAMBULE
 Pour le bon fonctionnement du programme il faudra installer les librairies SDL et SDl_TTF comme suit :
+
 `sudo apt install libsdl2-dev`
+
 `sudo apt install libsdl2-ttf-dev`
+
+---
 
 ## **SOMMAIRE**
 1. [Description de la demande](#projet)
