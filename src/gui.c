@@ -183,14 +183,9 @@ void handleEvents(AppData* appData) {
 
 char* getText() {
     AppData appData;
-    TTF_Font* font;
 
     initialize(&appData);
 
-    font = TTF_OpenFont("font/Lato-Black.ttf", 36);
-    if (font == NULL) {
-        fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
-    }
 
     printf("Veuillez saisir un texte à coder svp\n");
 
