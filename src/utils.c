@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include <stddef.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <ctype.h>
+
 #define BUFFER 512
 
 char * user_input(int *input_size) {
@@ -120,7 +121,7 @@ int Ecriture(char org[],char str[]){
 
 int checkalpha(char message[]){
     for (int i = 0; message[i] != '\0'; i++)    {
-        if (!isalnum(message[i]))        {
+        if (!isalnum(message[i])){
             return 0;
         }
     }
