@@ -17,6 +17,8 @@ typedef struct {
     int textLength;
     char stars[256];
     TTF_Font* font;
+    char key[256];
+    int keyNumber;
 } AppData;
 
 void initialize(AppData* appData) {
@@ -59,8 +61,7 @@ void cleanup(AppData* appData) {
 }
 
 void renderText(AppData* appData, TTF_Font* font, const char* text, int x, int y) {
-    SDL_Surface* picture=NULL;
-    SDL_Texture* pict=NULL;
+    
     SDL_Color color = { 0, 0, 0, 255 };
     SDL_Surface* surface = TTF_RenderText_Blended(font, text, color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(appData->renderer, surface);
@@ -91,7 +92,7 @@ void render(AppData* appData) {
     renderText(appData, font, "Votre message code :", (270 - (appData->textWidth) / 2), (350 - (appData->textHeight) / 2 - 150));
 
     TTF_Font* font2 = TTF_OpenFont("font/Lato-BlackItalic.ttf", 24);
-    renderText(appData, font2, "Cle : 10", (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
+    renderText(appData, font2, "Cle : ", (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
 
     while(c!= 1){
 
@@ -132,10 +133,39 @@ void renderTextInput(AppData* appData, TTF_Font* font) {
     SDL_FreeSurface(surface);
 }
 
+void renderKeyInput(AppData* appData, TTF_Font* font) {
+    
+    SDL_SetRenderDrawColor(appData->renderer, 255, 255, 255, 255);
+
+    SDL_Color color = { 0, 0, 0, 255 };
+    SDL_Surface* surface = TTF_RenderText_Blended(font, appData->text, color);
+
+    int textWidth = surface->w;
+    int textHeight = surface->h;
+
+    int rectWidth = textWidth + 40;
+    int rectHeight = textHeight + 30;
+
+    rectWidth = (rectWidth > 640) ? 640 : rectWidth;
+    rectHeight = (rectHeight > 480) ? 480 : rectHeight;
+
+    int rectX = (640 - rectWidth) / 2;
+    int rectY = 280 - (textHeight / 2) - 150;
+    
+    SDL_Rect textRect = { rectX, rectY, rectWidth, rectHeight };
+    
+    SDL_RenderDrawRect(appData->renderer, &textRect);
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(appData->renderer, surface);
+    SDL_RenderCopy(appData->renderer, texture, NULL, &textRect);
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
+}
+
 
 void saisie(AppData* appData){
 
-    TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 36);
+    TTF_Font* font = TTF_OpenFont("font/Lato-Regular.ttf", 36);
 
     if (font == NULL) {
 
@@ -152,29 +182,56 @@ void saisie(AppData* appData){
     TTF_CloseFont(font);
 }
 
+int count =0;
+
 void handleEvents(AppData* appData) {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_QUIT:
-                appData->done = SDL_TRUE;
-                break;
-            case SDL_TEXTINPUT:
-                strcat(appData->text, event.text.text);
-                appData->textLength++;
-                printf("Texte saisi : %s\n", appData->text);
-                saisie(appData);
-                break;
-            case SDL_KEYDOWN:
-                if (event.key.keysym.sym == SDLK_RETURN) {
-                    printf("Texte saisi : %s\n", appData->text);
-                    appData->textLength = 0;
+        if (count == 0){
+            switch (event.type) {
+                case SDL_QUIT:
                     appData->done = SDL_TRUE;
                     break;
-                }
-                break;
-            default:
-                break;
+                case SDL_TEXTINPUT:
+                    strcat(appData->text, event.text.text);
+                    appData->textLength++;
+                    printf("Texte saisi : %s\n", appData->text);
+                    saisie(appData);
+                    break;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_RETURN) {
+                        printf("Texte saisi : %s\n", appData->text);
+                        appData->textLength = 0;
+                        count++;
+                        printf("count : %d\n", count);
+                        break; 
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+                switch (event.type) {
+                case SDL_QUIT:
+                    appData->done = SDL_TRUE;
+                    break;
+                case SDL_TEXTINPUT:
+                    strcat(appData->key, event.text.text);
+                    //appData->textLength++;
+                    printf("clé : %s\n", appData->key);
+                    saisie(appData);
+                    break;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_RETURN) {
+                        appData->keyNumber = atoi(appData->key);
+                        printf("clé saisie : %d\n", appData->keyNumber);
+                        appData->done = SDL_TRUE;
+                        break;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -184,8 +241,6 @@ char* getText() {
     AppData appData;
 
     initialize(&appData);
-
-
     printf("Veuillez saisir un texte à coder svp\n");
 
     SDL_StartTextInput();
@@ -206,9 +261,30 @@ char* getText() {
     return text;
 }
 
+void res (AppData* appData){
 
-int main(int argc, char* argv[]) {
+    if (TTF_Init() != 0) {
+        fprintf(stderr, "Erreur TTF_Init : %s", TTF_GetError());
+        SDL_Quit();
+        exit(1);
+    }
+
+    TTF_Font* font = TTF_OpenFont("font/Lato-Black.ttf", 36);
+    if (font == NULL) {
+        fprintf(stderr, "Erreur de font %s \n", TTF_GetError());
+    }
+
+    renderText(appData, font, " ", 0, 0);
+    renderText(appData, font, appData->key, (200 - (appData->textWidth) / 2), (300 - (appData->textHeight) / 2));
+    SDL_RenderPresent(appData->renderer);
+
+}
+
+
+int main(int argc, char* argv[], AppData* appData) {
     char* txt = getText();
     printf("Texte renvoyé : %s\n", txt);
+    printf("Clé renvoyée : %d\n", appData->keyNumber);
+    res(appData);
     return EXIT_SUCCESS;
 }
